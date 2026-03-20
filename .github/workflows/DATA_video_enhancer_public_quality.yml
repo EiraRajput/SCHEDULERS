@@ -11,9 +11,8 @@ on:
 
 jobs:
   run-on-kaggle:
+    needs: update-counter
     runs-on: ubuntu-latest
-    timeout-minutes: 120
-
     steps:
       # =======================
       # 1. Checkout Repo
@@ -28,6 +27,7 @@ jobs:
             video_enhancer_public_quality/
             counter_public.txt
             requirements.txt
+            kaggle_account_tracker.txt
           fetch-depth: 1
 
       # Read the counter value and set sparse-checkout for the specific video
