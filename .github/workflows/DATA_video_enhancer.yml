@@ -153,7 +153,7 @@ jobs:
       - name: Prepare Dataset Folder
         run: |
           mkdir -p kaggle-dataset
-          cp -r output/videos kaggle-dataset/ || true
+          cp -r output kaggle-dataset/ || true
           cp -r video_enhancer kaggle-dataset/ || true
           cp counter.txt kaggle-dataset/ || true
           cp requirements.txt kaggle-dataset/ || true
@@ -224,7 +224,7 @@ jobs:
           {
             "id": "$KAGGLE_USERNAME/video-editing-scheduler-notebook",
             "title": "Video Editing Scheduler Notebook",
-            "code_file": "IPNBY/quality.ipynb",
+            "code_file": "ipnby/quality.ipynb",
             "language": "python",
             "kernel_type": "notebook",
             "is_private": true,
