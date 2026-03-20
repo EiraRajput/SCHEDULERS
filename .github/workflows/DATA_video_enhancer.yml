@@ -20,7 +20,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          repository: NairaaOfficial/DATA
+          repository: EiraRajput/DATA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
             ipnby/quality_public.ipynb
