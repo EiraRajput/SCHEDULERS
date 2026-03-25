@@ -1,14 +1,12 @@
-name: FACEBOOK STORY SCHEDULER
+name: SOCIAL MEDIA POLLS COMBINED
 
 on:
   workflow_dispatch:
-  schedule:
-    # - cron: '30 8 * * *'   # Runs at 1:00 PM IST
-    # - cron: '30 11 * * *'  # Runs at 5:00 PM IST
-    # - cron: '0 16 * * *'   # Runs at 9:30 PM IST 
-  
+  # schedule:
+    # - cron: '0 */5 * * *'
+
 jobs:
-  run-script:
+  threads-polls:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -19,9 +17,8 @@ jobs:
           repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
-            STORY_TO_UPLOAD/
-            FACEBOOK/
-            counter_video.txt
+            AI_MODELS/
+            THREADS/
             requirements.txt
           fetch-depth: 1
 
@@ -43,4 +40,4 @@ jobs:
 
       # Run your Python script
       - name: Run Python script
-        run: python3 FACEBOOK/facebook_story.py
+        run: python3 THREADS/thread_polls.py
