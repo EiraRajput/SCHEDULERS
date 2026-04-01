@@ -163,7 +163,13 @@ jobs:
           # Include the sparse-checked video file
           VIDEO_NUMBER="${{ needs.update-counter.outputs.video_number }}"
           mkdir -p kaggle-dataset/input
+          echo "[INFO] VIDEO_NUMBER=$VIDEO_NUMBER"
+          echo "[INFO] Looking for input/Video_${VIDEO_NUMBER}.mp4"
+          echo "[INFO] input/ listing:"
+          ls -la input/ || echo "[WARN] input/ not found"
           cp "input/Video_${VIDEO_NUMBER}.mp4" kaggle-dataset/input/ || echo "⚠️ Video file not found: input/Video_${VIDEO_NUMBER}.mp4"
+          echo "[INFO] kaggle-dataset/input listing after copy:"
+          ls -la kaggle-dataset/input/ || true
 
           # Kaggle dataset metadata
           KAGGLE_USERNAME="${{ steps.set_kaggle_creds.outputs.kaggle_username }}"
