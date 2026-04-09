@@ -1,4 +1,4 @@
-name: DATA VIDEO ENHANCER PART 1 - TRIGGER KAGGLE
+name: ENHANCER PART 1 - TRIGGER KAGGLE
 
 on:
   workflow_dispatch:
@@ -16,11 +16,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          repository: EiraRajput/DATA
+          repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
-            counter.py
-            counter.txt
+            COUNTER/
           fetch-depth: 1
 
       # Set up Python for counter scripts
@@ -37,18 +36,18 @@ jobs:
       - name: Increment Counter
         id: increment
         run: |
-          python3 counter.py
-          VIDEO_NUMBER=$(cat counter.txt)
+          python3 COUNTER/counter_enhancer.py
+          VIDEO_NUMBER=$(cat COUNTER/counter_enhancer.txt)
           echo "video_number=$VIDEO_NUMBER" >> $GITHUB_OUTPUT
-          echo "Updated counter.txt to: $VIDEO_NUMBER"
+          echo "Updated COUNTER/counter_enhancer.txt to: $VIDEO_NUMBER"
 
       # Commit updated counter file
       - name: Commit Counter Update
         run: |
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
-          git add counter.txt
-          git commit -m "Update counter.txt after processing" || echo "No changes to commit"
+          git add COUNTER/counter_enhancer.txt
+          git commit -m "Update COUNTER/counter_enhancer.txt after processing" || echo "No changes to commit"
           git pull --rebase origin main || echo "No changes to pull"
           git push || echo "No changes to push"
 
@@ -60,14 +59,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          repository: EiraRajput/DATA
+          repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
-            ipnby/quality.ipynb
-            video_enhancer/
-            counter.txt
+            COMMON/
+            KAGGLE/
+            ENHANCER/
+            IPNBY/quality.ipynb
+            COUNTER/counter_enhancer.txt
             requirements.txt
-            kaggle_account.txt
           fetch-depth: 1
 
       # Pull latest changes (includes updated counter)
@@ -79,7 +79,7 @@ jobs:
       - name: Read Kaggle Account Number
         id: read_kaggle_account
         run: |
-          ACCOUNT_NUM=$(cat kaggle_account.txt)
+          ACCOUNT_NUM=$(cat KAGGLE/kaggle_account.txt)
           echo "account_number=$ACCOUNT_NUM" >> $GITHUB_OUTPUT
           echo "📌 Current Kaggle account number: $ACCOUNT_NUM"
 
@@ -119,8 +119,8 @@ jobs:
         run: |
           VIDEO_NUMBER="${{ needs.update-counter.outputs.video_number }}"
           echo "Processing Video_${VIDEO_NUMBER}.mp4"
-          echo "input/Video_${VIDEO_NUMBER}.mp4" >> .git/info/sparse-checkout
-          echo "output/videos/test.mp4" >> .git/info/sparse-checkout
+          echo "INPUT/videos/Video_${VIDEO_NUMBER}.mp4" >> .git/info/sparse-checkout
+          echo "OUTPUT/test.mp4" >> .git/info/sparse-checkout
           git sparse-checkout reapply
 
       # Install Kaggle API
@@ -142,23 +142,23 @@ jobs:
       - name: Prepare Dataset Folder
         run: |
           mkdir -p kaggle-dataset
-          cp -r output kaggle-dataset/ || true
-          cp -r video_enhancer kaggle-dataset/ || true
-          cp counter.txt kaggle-dataset/ || true
+          cp -r OUTPUT kaggle-dataset/ || true
+          cp -r COMMON kaggle-dataset/ || true
+          cp -r ENHANCER kaggle-dataset/ || true
+          cp IPNBY/quality.ipynb kaggle-dataset/ || true
+          cp COUNTER/counter_enhancer.txt kaggle-dataset/ || true
           cp requirements.txt kaggle-dataset/ || true
-          cp ipnby/quality.ipynb kaggle-dataset/ || true
-
           
           # Include the sparse-checked video file
           VIDEO_NUMBER="${{ needs.update-counter.outputs.video_number }}"
-          mkdir -p kaggle-dataset/input
+          mkdir -p kaggle-dataset/INPUT
           echo "[INFO] VIDEO_NUMBER=$VIDEO_NUMBER"
-          echo "[INFO] Looking for input/Video_${VIDEO_NUMBER}.mp4"
-          echo "[INFO] input/ listing:"
-          ls -la input/ || echo "[WARN] input/ not found"
-          cp "input/Video_${VIDEO_NUMBER}.mp4" kaggle-dataset/input/ || echo "⚠️ Video file not found: input/Video_${VIDEO_NUMBER}.mp4"
-          echo "[INFO] kaggle-dataset/input listing after copy:"
-          ls -la kaggle-dataset/input/ || true
+          echo "[INFO] Looking for INPUT/videos/Video_${VIDEO_NUMBER}.mp4"
+          echo "[INFO] INPUT/ listing:"
+          ls -la INPUT/ || echo "[WARN] INPUT/ not found"
+          cp "INPUT/videos/Video_${VIDEO_NUMBER}.mp4" kaggle-dataset/INPUT/ || echo "⚠️ Video file not found: INPUT/videos/Video_${VIDEO_NUMBER}.mp4"
+          echo "[INFO] kaggle-dataset/INPUT listing after copy:"
+          ls -la kaggle-dataset/INPUT/ || true
 
           # Kaggle dataset metadata
           KAGGLE_USERNAME="${{ steps.set_kaggle_creds.outputs.kaggle_username }}"

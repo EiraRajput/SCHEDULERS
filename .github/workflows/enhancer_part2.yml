@@ -1,4 +1,4 @@
-name: DATA VIDEO ENHANCER PART 2 - DOWNLOAD AND ROTATE
+name: ENHANCER PART 2 - DOWNLOAD AND ROTATE
 
 on:
   workflow_dispatch:
@@ -14,13 +14,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          repository: EiraRajput/DATA
+          repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
-            output/videos
-            counter.txt
-            kaggle_account.txt
-            kaggle_account.py
+            KAGGLE/
+            OUTPUT/
+            COUNTER/counter_enhancer.txt
           fetch-depth: 1
 
       # Pull latest changes
@@ -32,7 +31,7 @@ jobs:
       - name: Read Kaggle Account Number
         id: read_kaggle_account
         run: |
-          ACCOUNT_NUM=$(cat kaggle_account.txt)
+          ACCOUNT_NUM=$(cat KAGGLE/kaggle_account.txt)
           echo "account_number=$ACCOUNT_NUM" >> $GITHUB_OUTPUT
           echo "📌 Current Kaggle account number: $ACCOUNT_NUM"
 
@@ -40,7 +39,7 @@ jobs:
       - name: Read Video Number
         id: read_video_number
         run: |
-          VIDEO_NUMBER=$(cat counter.txt)
+          VIDEO_NUMBER=$(cat COUNTER/counter_enhancer.txt)
           echo "video_number=$VIDEO_NUMBER" >> $GITHUB_OUTPUT
           echo "📹 Current video number: $VIDEO_NUMBER"
 
@@ -123,9 +122,9 @@ jobs:
         if: steps.check_status.outputs.status == 'complete'
         run: |
           echo "📁 Copying processed videos from Kaggle outputs..."
-          cp -r ./outputs/repo/output/videos/* output/videos/ 2>/dev/null || echo "No output/videos files to copy"
+          cp -r ./outputs/repo/OUTPUT/* OUTPUT/ 2>/dev/null || echo "No OUTPUT/ files to copy"
           echo "✅ Copy completed. Current contents:"
-          ls -la output/videos/ 2>/dev/null || echo "output/videos folder empty"
+          ls -la OUTPUT/ 2>/dev/null || echo "OUTPUT/ folder empty"
 
       # Commit Results
       - name: Commit and Push Changes
@@ -133,7 +132,7 @@ jobs:
         run: |
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
-          git add --sparse output/videos/ || echo "Nothing to add"
+          git add --sparse OUTPUT/ || echo "Nothing to add"
           git commit -m "Update output videos after Kaggle GPU notebook run (Video ${{ steps.read_video_number.outputs.video_number }})" || echo "No changes"
           git pull --rebase origin main || echo "No changes"
           git push || echo "No changes"
@@ -148,8 +147,8 @@ jobs:
       - name: Rotate Kaggle Account
         run: |
           echo "🔄 Rotating Kaggle account for next workflow run..."
-          python3 kaggle_account.py
-          NEXT_ACCOUNT=$(cat kaggle_account.txt)
+          python3 KAGGLE/kaggle_account.py
+          NEXT_ACCOUNT=$(cat KAGGLE/kaggle_account.txt)
           echo "✅ Next workflow will use Kaggle account: $NEXT_ACCOUNT"
 
       # Commit rotation
@@ -157,7 +156,7 @@ jobs:
         run: |
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
-          git add kaggle_account.txt
+          git add KAGGLE/kaggle_account.txt
           git commit -m "Rotate Kaggle account tracker" || echo "No changes to commit"
           git push || echo "No changes to push"
 
