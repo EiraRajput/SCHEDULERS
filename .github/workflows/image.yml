@@ -1,4 +1,4 @@
-name: SOCIAL MEDIA IMAGE COMBINED
+name: IMAGE COMBINED
 
 on:
   workflow_dispatch:
@@ -20,8 +20,7 @@ jobs:
           repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
-            counter_image.py
-            counter_image.txt
+            COUNTER/
           fetch-depth: 1
 
       # Set up Python environment
@@ -38,8 +37,8 @@ jobs:
       - name: Increment Counter
         id: increment
         run: |
-          python3 counter_image.py
-          IMAGE_NUMBER=$(cat counter_image.txt)
+          python3 COUNTER/counter_image.py
+          IMAGE_NUMBER=$(cat COUNTER/counter_image.txt)
           echo "image_number=$IMAGE_NUMBER" >> $GITHUB_OUTPUT
           echo "Updated counter_image.txt to: $IMAGE_NUMBER"
 
@@ -48,48 +47,10 @@ jobs:
         run: |
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
-          git add counter_image.txt
+          git add COUNTER/counter_image.txt
           git commit -m "Update counter_image.txt after processing" || echo "No changes to commit"
           git pull --rebase origin main || echo "No changes to pull"
           git push || echo "No changes to push"
-
-  instagram-image:
-    needs: update-counter
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      # Checkout the repository
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          repository: EiraRajput/SOCIAL_MEDIA
-          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
-          sparse-checkout: |
-            AI_MODELS/
-            INSTAGRAM/
-            counter_image.txt
-            requirements.txt
-          fetch-depth: 1
-
-      # Set up Python environment
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12.9'
-
-      # Install the necessary packages
-      - name: Installed package list
-        run: apt list --installed
-
-      # Install dependencies
-      - name: Install dependencies
-        run: |
-         python3 -m pip install --upgrade pip
-         pip3 install -r requirements.txt
-
-      # Run your Python script
-      - name: Run Python script
-        run: python3 INSTAGRAM/instagram_image.py
 
   threads-image:
     needs: update-counter
@@ -105,7 +66,7 @@ jobs:
           sparse-checkout: |
             AI_MODELS/
             THREADS/
-            counter_image.txt
+            COUNTER/counter_image.txt
             requirements.txt
           fetch-depth: 1
 
@@ -143,7 +104,7 @@ jobs:
           sparse-checkout: |
             AI_MODELS/
             FACEBOOK/
-            counter_image.txt
+            COUNTER/counter_image.txt
             requirements.txt
           fetch-depth: 1
 
@@ -166,3 +127,41 @@ jobs:
       # Run your Python script
       - name: Run Python script
         run: python3 FACEBOOK/facebook_image.py
+
+  instagram-image:
+    needs: update-counter
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          repository: EiraRajput/SOCIAL_MEDIA
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          sparse-checkout: |
+            AI_MODELS/
+            INSTAGRAM/
+            COUNTER/counter_image.txt
+            requirements.txt
+          fetch-depth: 1
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12.9'
+
+      # Install the necessary packages
+      - name: Installed package list
+        run: apt list --installed
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+         python3 -m pip install --upgrade pip
+         pip3 install -r requirements.txt
+
+      # Run your Python script
+      - name: Run Python script
+        run: python3 INSTAGRAM/instagram_image.py

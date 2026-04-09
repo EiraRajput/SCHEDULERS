@@ -1,4 +1,4 @@
-name: SOCIAL MEDIA POLLS COMBINED
+name: POLLS COMBINED
 
 on:
   workflow_dispatch:

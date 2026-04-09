@@ -1,4 +1,4 @@
-name: SOCIAL MEDIA TEXT COMBINED
+name: TEXT COMBINED
 
 on:
   workflow_dispatch:
@@ -54,6 +54,7 @@ jobs:
           repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
+            COMMON/
             AI_MODELS/
             FACEBOOK/
             requirements.txt

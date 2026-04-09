@@ -1,4 +1,4 @@
-name: ACTIVITY SCHEDULER
+name: ACTIVITY
 
 on:
   workflow_dispatch:

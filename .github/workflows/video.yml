@@ -1,4 +1,4 @@
-name: SOCIAL MEDIA COMBINED
+name: VIDEO COMBINED
 
 on:
   workflow_dispatch:
@@ -20,8 +20,7 @@ jobs:
           repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
-            counter_video.py
-            counter_video.txt
+            COUNTER/
           fetch-depth: 1
 
       # Set up Python environment
@@ -38,8 +37,8 @@ jobs:
       - name: Increment Counter
         id: increment
         run: |
-          python3 counter_video.py
-          VIDEO_NUMBER=$(cat counter_video.txt)
+          python3 COUNTER/counter_video.py
+          VIDEO_NUMBER=$(cat COUNTER/counter_video.txt)
           echo "video_number=$VIDEO_NUMBER" >> $GITHUB_OUTPUT
           echo "Updated counter_video.txt to: $VIDEO_NUMBER"
 
@@ -48,7 +47,7 @@ jobs:
         run: |
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
-          git add counter_video.txt
+          git add COUNTER/counter_video.txt
           git commit -m "Update counter_video.txt after processing" || echo "No changes to commit"
           git pull --rebase origin main || echo "No changes to pull"
           git push || echo "No changes to push"
@@ -65,9 +64,10 @@ jobs:
           repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
+            COMMON/
             AI_MODELS/
             INSTAGRAM/
-            counter_video.txt
+            COUNTER/counter_video.txt
             requirements.txt
           fetch-depth: 1
 
@@ -103,8 +103,9 @@ jobs:
           repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
+            COMMON/
             INSTAGRAM/
-            counter_video.txt
+            COUNTER/counter_video.txt
             requirements.txt
           fetch-depth: 1
 
@@ -140,9 +141,10 @@ jobs:
           repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
+            COMMON/
             AI_MODELS/
             THREADS/
-            counter_video.txt
+            COUNTER/counter_video.txt
             requirements.txt
           fetch-depth: 1
 
@@ -178,9 +180,10 @@ jobs:
           repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
+            COMMON/
             AI_MODELS/
             FACEBOOK/
-            counter_video.txt
+            COUNTER/counter_video.txt
             requirements.txt
           fetch-depth: 1
 
@@ -216,8 +219,9 @@ jobs:
           repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
+            COMMON/
             FACEBOOK/
-            counter_video.txt
+            COUNTER/counter_video.txt
             requirements.txt
           fetch-depth: 1
 
@@ -253,9 +257,10 @@ jobs:
           repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
+            COMMON/
             AI_MODELS/
             YOUTUBE/
-            counter_video.txt
+            COUNTER/counter_video.txt
             requirements.txt
           fetch-depth: 1
 
