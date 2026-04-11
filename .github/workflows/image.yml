@@ -2,8 +2,8 @@ name: IMAGE COMBINED
 
 on:
   workflow_dispatch:
-  # schedule:
-    # - cron: '30 11 * * *'   # Runs at 5:00 PM IST
+  schedule:
+    - cron: '30 11 * * *'   # Runs at 5:00 PM IST
     # - cron: '30 15 * * *'   # Runs at 9:00 PM IST
 
 jobs:
@@ -128,40 +128,40 @@ jobs:
       - name: Run Python script
         run: python3 FACEBOOK/facebook_image.py
 
-  instagram-image:
-    needs: update-counter
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      # Checkout the repository
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          repository: EiraRajput/SOCIAL_MEDIA
-          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
-          sparse-checkout: |
-            AI_MODELS/
-            INSTAGRAM/
-            COUNTER/counter_image.txt
-            requirements.txt
-          fetch-depth: 1
+  # instagram-image:
+  #   needs: update-counter
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 30
+  #   steps:
+  #     # Checkout the repository
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: EiraRajput/SOCIAL_MEDIA
+  #         token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+  #         sparse-checkout: |
+  #           AI_MODELS/
+  #           INSTAGRAM/
+  #           COUNTER/counter_image.txt
+  #           requirements.txt
+  #         fetch-depth: 1
 
-      # Set up Python environment
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12.9'
+  #     # Set up Python environment
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: '3.12.9'
 
-      # Install the necessary packages
-      - name: Installed package list
-        run: apt list --installed
+  #     # Install the necessary packages
+  #     - name: Installed package list
+  #       run: apt list --installed
 
-      # Install dependencies
-      - name: Install dependencies
-        run: |
-         python3 -m pip install --upgrade pip
-         pip3 install -r requirements.txt
+  #     # Install dependencies
+  #     - name: Install dependencies
+  #       run: |
+  #        python3 -m pip install --upgrade pip
+  #        pip3 install -r requirements.txt
 
-      # Run your Python script
-      - name: Run Python script
-        run: python3 INSTAGRAM/instagram_image.py
+  #     # Run your Python script
+  #     - name: Run Python script
+  #       run: python3 INSTAGRAM/instagram_image.py

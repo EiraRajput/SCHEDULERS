@@ -2,8 +2,8 @@ name: VIDEO COMBINED
 
 on:
   workflow_dispatch:
-  # schedule:
-    # - cron: '0 11 * * *'   # Runs at 4:30 PM IST
+  schedule:
+    - cron: '0 11 * * *'   # Runs at 4:30 PM IST
     # - cron: '0 15 * * *'   # Runs at 8:30 PM IST
 
 jobs:

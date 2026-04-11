@@ -2,9 +2,9 @@ name: TEXT COMBINED
 
 on:
   workflow_dispatch:
-  # schedule:
+  schedule:
     # - cron: '0 */3 * * *'
-    # - cron: '0 */5 * * *'
+    - cron: '0 */5 * * *'
 
 jobs:
   threads-text:
