@@ -144,19 +144,19 @@ jobs:
           mkdir -p kaggle-dataset
           cp -r OUTPUT kaggle-dataset/ || true
           cp -r COMMON kaggle-dataset/ || true
+          cp -r COUNTER/ kaggle-dataset/ || true
           cp -r ENHANCER kaggle-dataset/ || true
           cp IPNBY/quality.ipynb kaggle-dataset/ || true
-          cp COUNTER/counter_enhancer.txt kaggle-dataset/ || true
           cp requirements.txt kaggle-dataset/ || true
           
           # Include the sparse-checked video file
           VIDEO_NUMBER="${{ needs.update-counter.outputs.video_number }}"
-          mkdir -p kaggle-dataset/INPUT
+          mkdir -p kaggle-dataset/INPUT/videos
           echo "[INFO] VIDEO_NUMBER=$VIDEO_NUMBER"
           echo "[INFO] Looking for INPUT/videos/Video_${VIDEO_NUMBER}.mp4"
           echo "[INFO] INPUT/ listing:"
           ls -la INPUT/ || echo "[WARN] INPUT/ not found"
-          cp "INPUT/videos/Video_${VIDEO_NUMBER}.mp4" kaggle-dataset/INPUT/ || echo "⚠️ Video file not found: INPUT/videos/Video_${VIDEO_NUMBER}.mp4"
+          cp "INPUT/videos/Video_${VIDEO_NUMBER}.mp4" kaggle-dataset/INPUT/videos || echo "⚠️ Video file not found: INPUT/videos/Video_${VIDEO_NUMBER}.mp4"
           echo "[INFO] kaggle-dataset/INPUT listing after copy:"
           ls -la kaggle-dataset/INPUT/ || true
 
