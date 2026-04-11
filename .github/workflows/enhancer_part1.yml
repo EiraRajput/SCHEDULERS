@@ -217,7 +217,7 @@ jobs:
           {
             "id": "$KAGGLE_USERNAME/video-editing-scheduler-notebook",
             "title": "Video Editing Scheduler Notebook",
-            "code_file": "ipnby/quality.ipynb",
+            "code_file": "IPNBY/quality.ipynb",
             "language": "python",
             "kernel_type": "notebook",
             "is_private": true,
