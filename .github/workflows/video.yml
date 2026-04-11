@@ -71,6 +71,17 @@ jobs:
             requirements.txt
           fetch-depth: 1
 
+      # Configure sparse checkout for current reel bundle
+      - name: Configure Sparse Checkout for Current Reel
+        run: |
+          VIDEO_NUMBER="${{ needs.update-counter.outputs.video_number }}"
+          echo "Configuring sparse-checkout for reel bundle: $VIDEO_NUMBER"
+          {
+            echo "OUTPUT/reel_${VIDEO_NUMBER}/"
+            echo "OUTPUT/reels_${VIDEO_NUMBER}/"
+          } >> .git/info/sparse-checkout
+          git sparse-checkout reapply
+
       # Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -108,6 +119,17 @@ jobs:
             COUNTER/counter_video.txt
             requirements.txt
           fetch-depth: 1
+
+      # Configure sparse checkout for current reel bundle
+      - name: Configure Sparse Checkout for Current Reel
+        run: |
+          VIDEO_NUMBER="${{ needs.update-counter.outputs.video_number }}"
+          echo "Configuring sparse-checkout for reel bundle: $VIDEO_NUMBER"
+          {
+            echo "OUTPUT/reel_${VIDEO_NUMBER}/"
+            echo "OUTPUT/reels_${VIDEO_NUMBER}/"
+          } >> .git/info/sparse-checkout
+          git sparse-checkout reapply
 
       # Set up Python environment
       - name: Set up Python
@@ -148,6 +170,17 @@ jobs:
             requirements.txt
           fetch-depth: 1
 
+      # Configure sparse checkout for current reel bundle
+      - name: Configure Sparse Checkout for Current Reel
+        run: |
+          VIDEO_NUMBER="${{ needs.update-counter.outputs.video_number }}"
+          echo "Configuring sparse-checkout for reel bundle: $VIDEO_NUMBER"
+          {
+            echo "OUTPUT/reel_${VIDEO_NUMBER}/"
+            echo "OUTPUT/reels_${VIDEO_NUMBER}/"
+          } >> .git/info/sparse-checkout
+          git sparse-checkout reapply
+
       # Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -187,6 +220,17 @@ jobs:
             requirements.txt
           fetch-depth: 1
 
+      # Configure sparse checkout for current reel bundle
+      - name: Configure Sparse Checkout for Current Reel
+        run: |
+          VIDEO_NUMBER="${{ needs.update-counter.outputs.video_number }}"
+          echo "Configuring sparse-checkout for reel bundle: $VIDEO_NUMBER"
+          {
+            echo "OUTPUT/reel_${VIDEO_NUMBER}/"
+            echo "OUTPUT/reels_${VIDEO_NUMBER}/"
+          } >> .git/info/sparse-checkout
+          git sparse-checkout reapply
+
       # Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -224,6 +268,17 @@ jobs:
             COUNTER/counter_video.txt
             requirements.txt
           fetch-depth: 1
+
+      # Configure sparse checkout for current reel bundle
+      - name: Configure Sparse Checkout for Current Reel
+        run: |
+          VIDEO_NUMBER="${{ needs.update-counter.outputs.video_number }}"
+          echo "Configuring sparse-checkout for reel bundle: $VIDEO_NUMBER"
+          {
+            echo "OUTPUT/reel_${VIDEO_NUMBER}/"
+            echo "OUTPUT/reels_${VIDEO_NUMBER}/"
+          } >> .git/info/sparse-checkout
+          git sparse-checkout reapply
 
       # Set up Python environment
       - name: Set up Python
@@ -263,6 +318,17 @@ jobs:
             COUNTER/counter_video.txt
             requirements.txt
           fetch-depth: 1
+
+      # Configure sparse checkout for current reel bundle
+      - name: Configure Sparse Checkout for Current Reel
+        run: |
+          VIDEO_NUMBER="${{ needs.update-counter.outputs.video_number }}"
+          echo "Configuring sparse-checkout for reel bundle: $VIDEO_NUMBER"
+          {
+            echo "OUTPUT/reel_${VIDEO_NUMBER}/"
+            echo "OUTPUT/reels_${VIDEO_NUMBER}/"
+          } >> .git/info/sparse-checkout
+          git sparse-checkout reapply
 
       # Set up Python environment
       - name: Set up Python
