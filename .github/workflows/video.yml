@@ -114,7 +114,6 @@ jobs:
           repository: EiraRajput/SOCIAL_MEDIA
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           sparse-checkout: |
-            COMMON/
             INSTAGRAM/
             COUNTER/counter_video.txt
             requirements.txt
