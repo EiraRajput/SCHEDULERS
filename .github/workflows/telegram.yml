@@ -1,4 +1,4 @@
-name: TELEGRAM COMBINED SCHEDULER
+name: TELEGRAM COMBINED
 
 on:
   workflow_dispatch:
